@@ -44,11 +44,27 @@ const App = () => {
     }
   }
 
+  const renderedResults = searchResults.map(({ title, snippet, pageid }) => {
+    return (
+      <div key={pageid} className='item'>
+        <div className='content'>
+          <div className='header'>
+            {title}
+          </div>
+          <span dangerouslySetInnerHTML={{ __html: snippet}}/>
+        </div>
+      </div>
+    )
+  })
+
   useEffect(fetchWiki,[term])
 
   return (
     <div >
       <Search term={term} setTerm={setTerm}/>
+      <div className='ui celled list'>
+        {renderedResults}
+      </div>
       <Accordion items={items}/>
     </div>
   );
