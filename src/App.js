@@ -39,14 +39,31 @@ const App = () => {
       })
       setSearchResults(search)
     }
-    if(term){
-      search()
+    
+    const curTimeout = setTimeout(() => {
+      if(term){
+        search()
+      }
+    }, 700)
+
+    return () => {
+      clearTimeout(curTimeout)
     }
+    
+    
   }
 
   const renderedResults = searchResults.map(({ title, snippet, pageid }) => {
     return (
       <div key={pageid} className='item'>
+        <div className='right floated content'>
+          <a 
+            className='ui button'
+            href={`https://en.wikipedia.org?curid=${pageid}`}
+          >
+            Go
+          </a>
+        </div>
         <div className='content'>
           <div className='header'>
             {title}
