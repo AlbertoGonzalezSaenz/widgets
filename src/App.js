@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
+import axios from 'axios'
 import Accordion from './components/accordion/Accordion'
+import Search from './components/search/Search'
 
 const items = [
   {
@@ -18,8 +20,35 @@ const items = [
 
 const App = () => {
 
+  const [term, setTerm] = useState('')
+  const [searchResults, setSearchResults] = useState([])
+  const baseURL = 'https://en.wikipedia.org/w/api.php'
+
+  const fetchWiki = () => {
+    const search = async () => {
+      // On the next line I created a variable search containing the values nested in the data returned by the fetch. I extracted the search values by destructuring three levels deep.
+      // from data into query and finally into search
+      const { data: { query : { search } } } = await axios.get(baseURL, {
+        params : {
+          action: 'query',
+          list : 'search',
+          origin: '*',
+          format: 'json',
+          srsearch: term  
+        }
+      })
+      setSearchResults(search)
+    }
+    if(term){
+      search()
+    }
+  }
+
+  useEffect(fetchWiki,[term])
+
   return (
     <div >
+      <Search term={term} setTerm={setTerm}/>
       <Accordion items={items}/>
     </div>
   );
