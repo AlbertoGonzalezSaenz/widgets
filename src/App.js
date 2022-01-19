@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react'
 import axios from 'axios'
 import Accordion from './components/accordion/Accordion'
 import Search from './components/search/Search'
+import Dropdown from './components/dropdown/Dropdown'
 
 const items = [
   {
@@ -18,10 +19,28 @@ const items = [
   }
 ]
 
+const options = [
+  {
+      label: 'The Color Red',
+      value: 'red'
+  },
+  {
+      label: 'The Color Green',
+      value: 'green'
+  },
+  {
+      label: 'The Color Blue',
+      value: 'blue'
+  }
+]
+
 const App = () => {
 
-  const [term, setTerm] = useState('')
+  const [term, setTerm] = useState('programming')
   const [searchResults, setSearchResults] = useState([])
+  // State for Dropdown
+  const [selected, setSelected] = useState(options[0])
+
   const baseURL = 'https://en.wikipedia.org/w/api.php'
 
   const fetchWiki = () => {
@@ -39,18 +58,19 @@ const App = () => {
       })
       setSearchResults(search)
     }
-    
-    const curTimeout = setTimeout(() => {
-      if(term){
-        search()
+    if(term && !renderedResults.length){
+      search()
+    }else{
+      const curTimeout = setTimeout(() => {
+        if(term){
+          search()
+        }
+      }, 700)
+  
+      return () => {
+        clearTimeout(curTimeout)
       }
-    }, 700)
-
-    return () => {
-      clearTimeout(curTimeout)
     }
-    
-    
   }
 
   const renderedResults = searchResults.map(({ title, snippet, pageid }) => {
@@ -78,11 +98,12 @@ const App = () => {
 
   return (
     <div >
-      <Search term={term} setTerm={setTerm}/>
+      <Dropdown options={options} selected={selected} setSelected={setSelected}/>
+      {/* <Search term={term} setTerm={setTerm}/>
       <div className='ui celled list'>
         {renderedResults}
       </div>
-      <Accordion items={items}/>
+      <Accordion items={items}/> */}
     </div>
   );
 }
