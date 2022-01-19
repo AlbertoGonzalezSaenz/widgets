@@ -40,6 +40,7 @@ const App = () => {
   const [searchResults, setSearchResults] = useState([])
   // State for Dropdown
   const [selected, setSelected] = useState(options[0])
+  const [showDropDown, setShowDropDown] = useState(true)
 
   const baseURL = 'https://en.wikipedia.org/w/api.php'
 
@@ -98,7 +99,8 @@ const App = () => {
 
   return (
     <div >
-      <Dropdown options={options} selected={selected} setSelected={setSelected}/>
+      <button onClick={() => setShowDropDown(!showDropDown)}>Toggle Dropdown</button>
+      {showDropDown ? <Dropdown options={options} selected={selected} setSelected={setSelected}/> : null}
       {/* <Search term={term} setTerm={setTerm}/>
       <div className='ui celled list'>
         {renderedResults}

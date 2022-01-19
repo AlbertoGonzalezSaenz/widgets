@@ -23,12 +23,21 @@ function Dropdown({options, selected, setSelected}) {
     }
 
     const setGlobalEventClick = () => {
-        document.body.addEventListener('click', (e) => {
+
+        const onBodyClick = (e) => {
             if(ref.current.contains(e.target)){
                 return
             }
             setDisplay(false)
-        })
+        }
+
+        document.body.addEventListener('click', onBodyClick, { capture: true })
+
+        // useEffect cleanup function
+
+        return () => {
+            document.body.removeEventListener('click', onBodyClick, { capture: true })
+        }
     }
 
     useEffect( setGlobalEventClick , [])
