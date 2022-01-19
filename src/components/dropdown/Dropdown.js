@@ -4,7 +4,7 @@ function Dropdown({options, selected, setSelected}) {
 
     
 
-    const renderedOptions = options.map((option) => {
+    const renderedOptions = options.filter(({value}) => selected.value != value).map((option) => {
         return (
             <div 
                 key={option.value}  
