@@ -3,6 +3,7 @@ import axios from 'axios'
 import Accordion from './components/accordion/Accordion'
 import Search from './components/search/Search'
 import Dropdown from './components/dropdown/Dropdown'
+import Translate from './components/translate/Translate'
 
 const items = [
   {
@@ -99,8 +100,9 @@ const App = () => {
 
   return (
     <div >
-      <button onClick={() => setShowDropDown(!showDropDown)}>Toggle Dropdown</button>
-      {showDropDown ? <Dropdown options={options} selected={selected} setSelected={setSelected}/> : null}
+      <Translate/>
+      {/* <button onClick={() => setShowDropDown(!showDropDown)}>Toggle Dropdown</button>
+      {showDropDown ? <Dropdown label="Select a color" options={options} selected={selected} setSelected={setSelected}/> : null} */}
       {/* <Search term={term} setTerm={setTerm}/>
       <div className='ui celled list'>
         {renderedResults}
