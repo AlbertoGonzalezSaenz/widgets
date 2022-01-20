@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Search({term, setTerm}) {
+function Search({term, setTerm, renderedResults}) {
 
     const handleSubmit = (e) => {
         // e.preventDefault()
@@ -25,6 +25,10 @@ function Search({term, setTerm}) {
                         value={term}
                     />
                 </div>
+            </div>
+
+            <div className='ui celled list'>
+                {renderedResults}
             </div>
         </div>
     );

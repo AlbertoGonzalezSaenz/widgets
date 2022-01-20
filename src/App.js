@@ -4,6 +4,8 @@ import Accordion from './components/accordion/Accordion'
 import Search from './components/search/Search'
 import Dropdown from './components/dropdown/Dropdown'
 import Translate from './components/translate/Translate'
+import Route from './Route'
+import Header from './components/header/Header'
 
 const items = [
   {
@@ -100,14 +102,21 @@ const App = () => {
 
   return (
     <div >
-      <Translate/>
-      {/* <button onClick={() => setShowDropDown(!showDropDown)}>Toggle Dropdown</button>
-      {showDropDown ? <Dropdown label="Select a color" options={options} selected={selected} setSelected={setSelected}/> : null} */}
-      {/* <Search term={term} setTerm={setTerm}/>
-      <div className='ui celled list'>
-        {renderedResults}
-      </div>
-      <Accordion items={items}/> */}
+      <Header/>
+      <Route path="/">
+        <Accordion items={items}/>
+      </Route>
+      <Route path="/list">
+        <Search renderedResults={renderedResults} term={term} setTerm={setTerm}/>
+      </Route>
+      <Route path="/dropdown">
+        <button onClick={() => setShowDropDown(!showDropDown)}>Toggle Dropdown</button>
+        {showDropDown ? <Dropdown label="Select a color" options={options} selected={selected} setSelected={setSelected}/> : null}
+      </Route>
+      <Route path="/translate">
+        <Translate/>
+      </Route>
+      
     </div>
   );
 }
